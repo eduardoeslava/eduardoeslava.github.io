@@ -173,8 +173,8 @@
                                       }; })  
                                     .entries(data);
 
-              console.log("results: ",aggregatedData)   
-
+              console.log("results: ",JSON.stringify(aggregatedData))   
+              
               var svg = d3.select("svg"),
 
               margin = {
@@ -198,7 +198,7 @@
 
              
 
-              d3.json(aggregatedData).then(function (data) {
+              d3.json(JSON.parse(JSON.stringify(aggregatedData))).then(function (data) {
                 x.domain(data.map(function (d) {
                     return d.key;
                   }));
@@ -236,13 +236,7 @@
                 });
               });
 
-              });
-
-         
-                       
-
-        
-
+              });                              
 </script>
 
   </body>
