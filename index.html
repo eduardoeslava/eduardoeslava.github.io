@@ -177,10 +177,10 @@
 
         d3.json("https://www.datos.gov.co/resource/ntr9-zvwd.json").then(function (data) {
           x.domain(data.map(function (d) {
-              return d["COD SED"];
+              return d.codigo_sed;
             }));
           y.domain([0, d3.max(data, function (d) {
-                return Number(d["MATRICULA TOTAL EBPM"]);
+                return Number(d.matricula_total_epbm);
               })]);
 
           g.append("g")
@@ -202,14 +202,14 @@
           .enter().append("rect")
           .attr("class", "bar")
           .attr("x", function (d) {
-            return x(d["COD SED"]);
+            return x(d.codigo_sed);
           })
           .attr("y", function (d) {
-            return y(Number(d["MATRICULA TOTAL EBPM"]));
+            return y(Number(d.matricula_total_epbm));
           })
           .attr("width", x.bandwidth())
           .attr("height", function (d) {
-            return height - y(Number(d["MATRICULA TOTAL EBPM"]));
+            return height - y(Number(d.matricula_total_epbm));
           });
         });
 
