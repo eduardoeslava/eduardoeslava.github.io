@@ -61,11 +61,11 @@
       </div>
     </nav>
 
-    <header class="bg-primary text-white">
+    <header class="bg-primary text-white" >
       <div class="container text-center">
-        <h1>Students Colombia Population</h1>
-        <p class="lead">How is demographic on our schools</p>
-        <svg width="960" height="500"></svg>
+        <h1>Colombia Students Population Enroll in 2015 </h1>
+        <p class="lead"> Levels: Preescolar, Básica y Media </p>
+        <svg width="960" height="500" ></svg>
       </div>
     </header>
 
@@ -197,7 +197,7 @@
               x.domain(aggregatedData.map( (d) => {
                         return (d.key.substring(0,3));
                       }));
-              
+
               y.domain([0, d3.max(aggregatedData,  (d) => {
                           return Number(d.value.total);
                         })]);

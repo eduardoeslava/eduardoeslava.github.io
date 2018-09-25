@@ -4,9 +4,12 @@ img{
 }
 
 .bar {
-	  fill: steelblue;
+	  fill: #001f3f;
 }
 
 .bar:hover {
-	  fill: brown;
+	  border-width: 15px;
+	  border-style: solid; 
+	  border-color: #85144b;
+	  fill: hsla(331, 74%, 70%, 1.0);
 }
