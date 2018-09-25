@@ -66,6 +66,8 @@
         <h1>Colombia Students Population Enroll in 2015 By Department</h1>
         <p class="lead"> Levels: Preescolar, Básica y Media </p>
         <svg id="outside" width="960" height="500" ><svg id="inside" width="300" height="300"> </svg></svg>
+        <p id="department"><p>
+        <p id="municipalitie"><p>  
       </div>
     </header>
 
@@ -356,8 +358,8 @@
                .attr("height", (d) => {
                       return height - y(Number(d.value.IEBPM));
                 })
-               .on("click",(d)=>{
-                      console.log("Click Inside")
+               .on("mouseover",(d)=>{
+                      d3.select("#deparment").html(selection)
                });
 
                g.append("g")
@@ -371,6 +373,17 @@
                .attr("dy", "0.81em")
                .attr("text-anchor", "end")
                .text(selection);
+
+
+               g.append("g")
+               .call(d3.axisLeft(y))
+               .append("text")
+               .attr("fill", "#000")
+               .attr("x", 150)
+               .attr("y", 270)
+               .attr("dy", "0.81em")
+               .attr("text-anchor", "end")
+               .text("Municipalities");
 
 
           });  
