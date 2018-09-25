@@ -9,6 +9,9 @@ Jquery
 D3JS
 
 ## How to run 
+1. Clone the repository.
+2. Open index.html using the prefered browser.
+3. When the browser is opened, move the mouse over the barchar and other barchar eppear at the upper left corner.
 
 ## Author 
 Andres Eslava
