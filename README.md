@@ -2,7 +2,7 @@
 
 ## Project goal and technologies
 
-Create a visualization using a Tamara Munzner framework, that allow describe the studenst enrolled in some level of education at 2015, to summarize the information that have the entire set of municpality of Colombia.
+Create a visualization using a Tamara Munzner framework @tamaramunzner, that allow describe the students enrolled in some level of education at 2015, to summarize the information that have the entire set of municipality of Colombia.
 
 Bootstrap
 Jquery
