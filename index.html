@@ -154,12 +154,9 @@
     <!-- Custom JavaScript for this theme -->
     <script src="js/scrolling-nav.js"></script>
 
-    <!-- Data -->
-    <script type="text/javascript" src="https://www.datos.gov.co/resource/ntr9-zvwd.json""></script>
 
 
     <!-- Visualization Script   -->
-
     <script>
 
         console.log("Building visualization: ")
@@ -173,7 +170,7 @@
                                       }; })  
                                     .entries(data);
 
-              console.log("results: ",JSON.stringify(aggregatedData))   
+              console.log("results: ",JSON.parse(JSON.stringify(aggregatedData)))   
               
               var svg = d3.select("svg"),
 
@@ -183,60 +180,62 @@
                 bottom: 30,
                 left: 50
               },
+              
+
               width = +svg.attr("width") - margin.left - margin.right,
               height = +svg.attr("height") - margin.top - margin.bottom,
               g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-              var parseTime = d3.timeParse("%d-%b-%y");
 
               var x = d3.scaleBand()
                 .rangeRound([0, width])
                 .padding(0.1);
 
               var y = d3.scaleLinear()
-                .rangeRound([height, 0]);
+                        .rangeRound([height, 0]);          
+              
 
-             
+              x.domain(aggregatedData.map( (d) => {
+                        return (d.key.substring(0,3));
+                      }));
+              
+              y.domain([0, d3.max(aggregatedData,  (d) => {
+                          return Number(d.value.total);
+                        })]);
 
-              d3.json(JSON.parse(JSON.stringify(aggregatedData))).then(function (data) {
-                x.domain(data.map(function (d) {
-                    return d.key;
-                  }));
-                y.domain([0, d3.max(data, function (d) {
-                      return Number(d.value.total);
-                    })]);
+              g.append("g")
+               .attr("transform", "translate(0," + height + ")")
+               .call(d3.axisBottom(x))
 
-                g.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x))
+              g.append("g")
+               .call(d3.axisLeft(y))
+               .append("text")
+               .attr("fill", "#000")
+               .attr("transform", "rotate(-90)")
+               .attr("y", 6)
+               .attr("dy", "0.71em")
+               .attr("text-anchor", "end")
+               .text("Population");
 
-                g.append("g")
-                .call(d3.axisLeft(y))
-                .append("text")
-                .attr("fill", "#000")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", "0.71em")
-                .attr("text-anchor", "end")
-                .text("Population");
-
-                g.selectAll(".bar")
-                .data(data)
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", function (d) {
-                  return x(d.key);
+              g.selectAll(".bar")
+               .data(aggregatedData)
+               .enter().append("rect")
+               .attr("class", "bar")
+               .attr("x",  (d) => {
+                      return x(d.key.substr(0,3));
                 })
-                .attr("y", function (d) {
-                  return y(Number(d.value.total));
+               .attr("y", function (d) {
+                      return y(Number(d.value.total));
                 })
-                .attr("width", x.bandwidth())
-                .attr("height", function (d) {
-                  return height - y(Number(d.value.total));
-                });
-              });
-
-              });                              
+               .attr("width", x.bandwidth())
+               .attr("height", (d) => {
+                      return height - y(Number(d.value.total));
+                })
+               // .on("mouseover", (d) => {
+               //        tooltip.attr("x" , 300).
+               //        attr("y" , 200).
+               //        text(d.value.mean); 
+               //  });
+          });                              
 </script>
 
   </body>
