@@ -1,4 +1,4 @@
-# eduardoeslava.github.io
+# Students Colombia
 
 ## Project goal and technologies
 
