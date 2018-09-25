@@ -58,14 +58,14 @@
            
           </ul>
         </div>
-      </div>
+      </div>  
     </nav>
 
     <header class="bg-primary text-white" >
       <div class="container text-center">
-        <h1>Colombia Students Population Enroll in 2015 </h1>
+        <h1>Colombia Students Population Enroll in 2015 By Department</h1>
         <p class="lead"> Levels: Preescolar, Básica y Media </p>
-        <svg width="960" height="500" ></svg>
+        <svg id="outside" width="960" height="500" ><svg id="inside" width="300" height="300"> </svg></svg>
       </div>
     </header>
 
@@ -172,13 +172,13 @@
 
               console.log("results: ",JSON.parse(JSON.stringify(aggregatedData)))   
               
-              var svg = d3.select("svg"),
+              var svg = d3.select("#outside"),
 
               margin = {
                 top: 20,
                 right: 20,
                 bottom: 30,
-                left: 50
+                left: 55
               },
               
 
@@ -202,6 +202,11 @@
                           return Number(d.value.total);
                         })]);
 
+
+              const tooltip = g.append("svg")
+                      .attr("x",-100)
+
+
               g.append("g")
                .attr("transform", "translate(0," + height + ")")
                .call(d3.axisBottom(x))
@@ -211,14 +216,16 @@
                .append("text")
                .attr("fill", "#000")
                .attr("transform", "rotate(-90)")
-               .attr("y", 6)
-               .attr("dy", "0.71em")
+               .attr("y", 8)
+               .attr("dy", "0.81em")
                .attr("text-anchor", "end")
                .text("Population");
 
+
               g.selectAll(".bar")
                .data(aggregatedData)
-               .enter().append("rect")
+               .enter()
+               .append("rect")
                .attr("class", "bar")
                .attr("x",  (d) => {
                       return x(d.key.substr(0,3));
@@ -230,12 +237,144 @@
                .attr("height", (d) => {
                       return height - y(Number(d.value.total));
                 })
-               // .on("mouseover", (d) => {
-               //        tooltip.attr("x" , 300).
-               //        attr("y" , 200).
-               //        text(d.value.mean); 
-               //  });
-          });                              
+               .on("mouseover", (d) => {
+                      
+
+
+                      draw(d.key)       
+                })
+               .on("mouseout",(d)=>{
+                      //cleanDraw();   
+               })
+               .on("click",(d)=>{
+                      draw(d.key) 
+               });
+          });         
+
+
+
+
+          /**
+          Clean inner chart
+          **/
+
+          function cleanDraw(){
+              var svg = d3.select("#inside").html(" ")
+          }
+
+          /**
+           Draw Inner chart
+          **/
+          function draw(selection){
+             cleanDraw()
+             console.log(selection)
+             $.getJSON("https://www.datos.gov.co/resource/ntr9-zvwd.json",function(data){
+             var aggregatedData = d3.nest()
+                                    .key(function(d) { return d.departamento; })
+                                    .key(function(d) { return d.municipio; })
+                                    .rollup(function(v) { return {
+                                                                   count: v.length,
+                                                                   docentes: d3.sum(v, function(d) { return d.numero_de_docentes_oficiales_epbm; }),
+                                                                   IEBPM: d3.sum(v, function(d) { return d.total_establecimientos_educativos_epbm; })
+
+                                      }; })  
+                                    .entries(data);
+
+              var filterData = aggregatedData.filter(d => d.key === selection)    
+              var subFilterData = filterData[0].values
+
+              console.log("aggregation: ",aggregatedData)   
+              console.log("filter: ",filterData)  
+              console.log("mun: ",)   
+
+              
+              var svg = d3.select("#inside");
+
+              svg.attr("x",550);
+
+              margin = {
+                top: 20,
+                right: 20,
+                bottom: 30,
+                left: 55
+              },
+              
+
+              width = +svg.attr("width") - margin.left - margin.right,
+              height = +svg.attr("height") - margin.top - margin.bottom,
+              g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+              var x = d3.scaleBand()
+                .rangeRound([0, width])
+                .padding(0.1);
+
+              var y = d3.scaleLinear()
+                        .rangeRound([height, 0]);          
+              
+
+              x.domain(subFilterData.map( (d) => {
+                        return d.key.substring(0,1);
+                      }));
+
+              y.domain([0, d3.max(subFilterData,  (d) => {
+                          return Number(d.value.IEBPM);
+                        })]);
+
+
+              const tooltip = g.append("svg")
+                      .attr("x",-100)
+
+
+              g.append("g")
+               .attr("transform", "translate(0," + height + ")")
+               .call(d3.axisBottom(x))
+
+              g.append("g")
+               .call(d3.axisLeft(y))
+               .append("text")
+               .attr("fill", "#000")
+               .attr("transform", "rotate(-90)")               
+               .attr("y", -45)
+               .attr("dy", "0.81em")
+               .attr("text-anchor", "end")
+               .text("Schools QTY");
+
+
+
+              g.selectAll(".barInside")
+               .data(subFilterData)
+               .enter()
+               .append("rect")
+               .attr("class", "barInside")
+               .attr("x",  (d) => {
+                      return x(d.key.substring(0,1));
+                })
+               .attr("y",  (d) => {
+                      return y(Number(d.value.IEBPM));
+                })
+               .attr("width", x.bandwidth())
+               .attr("height", (d) => {
+                      return height - y(Number(d.value.IEBPM));
+                })
+               .on("click",(d)=>{
+                      console.log("Click Inside")
+               });
+
+               g.append("g")
+                .text("HOLA")
+
+               g.append("g")
+               .call(d3.axisLeft(y))
+               .append("text")
+               .attr("fill", "#000")
+               .attr("x", 150)
+               .attr("dy", "0.81em")
+               .attr("text-anchor", "end")
+               .text(selection);
+
+
+          });  
+          }                     
 </script>
 
   </body>

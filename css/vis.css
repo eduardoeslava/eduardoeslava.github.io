@@ -8,8 +8,11 @@ img{
 }
 
 .bar:hover {
-	  border-width: 15px;
-	  border-style: solid; 
-	  border-color: #85144b;
 	  fill: hsla(331, 74%, 70%, 1.0);
 }
+
+.barInside {
+	  fill: green;
+}
+
+#
