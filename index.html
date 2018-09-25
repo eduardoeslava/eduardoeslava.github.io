@@ -202,10 +202,10 @@
           .enter().append("rect")
           .attr("class", "bar")
           .attr("x", function (d) {
-            return x(d.Run);
+            return x(d["COD SED"]);
           })
           .attr("y", function (d) {
-            return y(Number(d.Speed));
+            return y(Number(d["MATRICULA TOTAL EBPM"]));
           })
           .attr("width", x.bandwidth())
           .attr("height", function (d) {
