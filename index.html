@@ -175,12 +175,12 @@
         var y = d3.scaleLinear()
           .rangeRound([height, 0]);
 
-        d3.tsv("morley.tsv").then(function (data) {
+        d3.json("https://www.datos.gov.co/resource/ntr9-zvwd.json").then(function (data) {
           x.domain(data.map(function (d) {
-              return d.Run;
+              return d["COD SED"];
             }));
           y.domain([0, d3.max(data, function (d) {
-                return Number(d.Speed);
+                return Number(d["MATRICULA TOTAL EBPM"]]);
               })]);
 
           g.append("g")
@@ -195,7 +195,7 @@
           .attr("y", 6)
           .attr("dy", "0.71em")
           .attr("text-anchor", "end")
-          .text("Speed");
+          .text("Population");
 
           g.selectAll(".bar")
           .data(data)
