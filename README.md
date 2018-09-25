@@ -1,6 +1,6 @@
 # eduardoeslava.github.io
 
-## Project goal and techonologies
+## Project goal and technologies
 
 ## How to run 
 
