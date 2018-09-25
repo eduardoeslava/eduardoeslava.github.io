@@ -2,13 +2,22 @@
 
 ## Project goal and technologies
 
+Create a visualization using a Tamara Munzner framework, that allow describe the studenst enrolled in some level of education at 2015, to summarize the information that have the entire set of municpality of Colombia.
+
+Bootstrap
+Jquery
+D3JS
+
 ## How to run 
 
 ## Author 
+Andres Eslava
+Twitter @eduardoeslava
+eduardoeslava@gmail.com
 
 ## Preview
 
-![alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2xYpJuhx57opLmWTtEj66rpx41DWIXwLiEz6S4CWSx_IHoHX1)
+![alt text](https://eduardoeslava.github.io/Visualization.png)
 
 
 ## License
