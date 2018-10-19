@@ -19,7 +19,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 </style>
 
 <!-- Multiline line chart  style -->
-<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 
 <style>
 .axis--x path {
@@ -154,7 +154,7 @@ var line = d3.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.temperature); });
 
-d3.tsv("data.tsv", type, function(error, data) {
+d3.tsv("https://github.com/eduardoeslava/eduardoeslava.github.io/blob/master/ar/data.tsv", type, function(error, data) {
   if (error) throw error;
 
   var cities = data.columns.slice(1).map(function(id) {
