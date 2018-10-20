@@ -214,7 +214,7 @@ d3.tsv("https://eduardoeslava.github.io/ar/data2.tsv", type, function(error, dat
   patient.append("text")
       .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.population) + ")"; })
-      .attr("x", 3)
+      .attr("x", 5)
       .attr("dy", "0.35em")
       .style("font", "10px sans-serif")
       .text(function(d) { return d.id; });
