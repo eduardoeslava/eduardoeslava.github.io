@@ -202,7 +202,7 @@ d3.tsv("https://eduardoeslava.github.io/ar/data2.tsv", type, function(error, dat
       .text("Patients");
 
   var patient = g.selectAll(".patient")
-    .data(cities)
+    .data(patients)
     .enter().append("g")
       .attr("class", "patient");
 
