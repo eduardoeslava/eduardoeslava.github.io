@@ -23,7 +23,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
 <style>
 .axis--x path {
-  display: none;
+  /*display: none;*/
 }
 
 .axisWhite line{
@@ -192,7 +192,7 @@ d3.tsv("https://eduardoeslava.github.io/ar/data3.tsv", type, function(error, dat
   g.append("g")
       .attr("class", "axis axis--x axisWhite")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x).ticks(d3.timeMonth.every(2)));
 
   g.append("g")
       .attr("class", "axis axis--y axisWhite")
