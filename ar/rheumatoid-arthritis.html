@@ -154,7 +154,7 @@ var svg = d3.select("svg"),
     height = svg.attr("height") - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var parseTime = d3.timeParse("%Y/%m/%d");
+var parseTime = d3.timeParse("%m/%d/%Y");
 
 var x = d3.scaleTime().range([0, width]),
     y = d3.scaleLinear().range([height, 0]),
@@ -198,7 +198,7 @@ d3.tsv("https://eduardoeslava.github.io/ar/data1.tsv", type, function(error, dat
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", "0.71em")
-      .attr("fill", "#FFFFFF")
+      .attr("fill", "#FFF")
       .text("Temperature, ºF");
 
   var city = g.selectAll(".city")
