@@ -163,16 +163,16 @@ var x = d3.scaleTime().range([0, width]),
 var line = d3.line()
     .curve(d3.curveBasis)
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.temperature); });
+    .y(function(d) { return y(d.population); });
 
 d3.tsv("https://eduardoeslava.github.io/ar/data2.tsv", type, function(error, data) {
   if (error) throw error;
 
-  var cities = data.columns.slice(1).map(function(id) {
+  var patientes = data.columns.slice(1).map(function(id) {
     return {
       id: id,
       values: data.map(function(d) {
-        return {date: d.date, temperature: d[id]};
+        return {date: d.date, population: d[id]};
       })
     };
   });
@@ -180,11 +180,11 @@ d3.tsv("https://eduardoeslava.github.io/ar/data2.tsv", type, function(error, dat
   x.domain(d3.extent(data, function(d) { return d.date; }));
 
   y.domain([
-    d3.min(cities, function(c) { return d3.min(c.values, function(d) { return d.temperature; }); }),
-    d3.max(cities, function(c) { return d3.max(c.values, function(d) { return d.temperature; }); })
+    d3.min(patients, function(c) { return d3.min(c.values, function(d) { return d.population; }); }),
+    d3.max(patients, function(c) { return d3.max(c.values, function(d) { return d.population; }); })
   ]);
 
-  z.domain(cities.map(function(c) { return c.id; }));
+  z.domain(patients.map(function(c) { return c.id; }));
 
   g.append("g")
       .attr("class", "axis axis--x")
@@ -201,19 +201,19 @@ d3.tsv("https://eduardoeslava.github.io/ar/data2.tsv", type, function(error, dat
       .attr("fill", "#FFF")
       .text("Patients");
 
-  var city = g.selectAll(".city")
+  var patient = g.selectAll(".patient")
     .data(cities)
     .enter().append("g")
-      .attr("class", "city");
+      .attr("class", "patient");
 
-  city.append("path")
+  patient.append("path")
       .attr("class", "line")
       .attr("d", function(d) { return line(d.values); })
       .style("stroke", function(d) { return z(d.id); });
 
-  city.append("text")
+  patient.append("text")
       .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
-      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
+      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.population) + ")"; })
       .attr("x", 3)
       .attr("dy", "0.35em")
       .style("font", "10px sans-serif")
