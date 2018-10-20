@@ -168,7 +168,7 @@ var line = d3.line()
 d3.tsv("https://eduardoeslava.github.io/ar/data2.tsv", type, function(error, data) {
   if (error) throw error;
 
-  var patientes = data.columns.slice(1).map(function(id) {
+  var patients = data.columns.slice(1).map(function(id) {
     return {
       id: id,
       values: data.map(function(d) {
